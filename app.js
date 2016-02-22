@@ -30,7 +30,7 @@ var mongoose = require('mongoose');
 require('./models/Posts');
 require('./models/Comments');
 
-mongoose.connect('mongodb://localhost/news');
+mongoose.connect('mongodb://localhost/mean-news');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
