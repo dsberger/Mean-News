@@ -4,7 +4,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -27,6 +26,9 @@ app.use('/', routes);
 app.use('/users', users);
 
 // Mongoose DB
+var mongoose = require('mongoose');
+require('./models/Posts');
+
 mongoose.connect('mongodb://localhost/news')
 
 // catch 404 and forward to error handler
