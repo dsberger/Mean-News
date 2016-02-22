@@ -28,8 +28,9 @@ app.use('/users', users);
 // Mongoose DB
 var mongoose = require('mongoose');
 require('./models/Posts');
+require('./models/Comments');
 
-mongoose.connect('mongodb://localhost/news')
+mongoose.connect('mongodb://localhost/news');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
