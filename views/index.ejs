@@ -65,7 +65,8 @@
         </div>
 
         <form ng-submit="addPost()"
-          style="margin-top:30px;">
+              ng-show="isLoggedIn()"
+              style="margin-top:30px;">
           <h3>Add a new post</h3>
 
           <div class="form-group">
@@ -108,7 +109,8 @@
         </div>
 
         <form ng-submit="addComment()"
-        style="margin-top:30px;">
+              ng-show="isLoggedIn()"
+              style="margin-top:30px;">
           <h3>Add a new comment</h3>
 
           <div class="form-group">

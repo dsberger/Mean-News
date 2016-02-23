@@ -1,6 +1,8 @@
 app.controller('MainCtrl', [
-  '$scope', '$stateParams', 'posts',
-  function($scope, $stateParams, posts){
+  '$scope', '$stateParams', 'posts', 'auth',
+  function($scope, $stateParams, posts, auth){
+
+    $scope.isLoggedIn = auth.isLoggedIn;
 
     $scope.posts = posts.posts;
 
