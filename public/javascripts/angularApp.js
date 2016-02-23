@@ -1,14 +1,22 @@
 var app = angular.module('meanNews', ['ui.router']);
 
-app.factory('posts', [function(){
-   var o = {
-     posts: [
-       {title:'Reddit',
-        link:'http://www.reddit.com',
-        upvotes: 4,
-        comments:[ {author: 'Dan', body: 'This site is great!', upvotes: 2 } ]}
-     ]
+app.factory('posts', ['$http', function($http){
+   var o = {}
+
+   o.posts = [];
+
+   o.getAll = function(){
+     return $http.get('/posts').success(function(data){
+       angular.copy(data, o.posts);
+     });
    };
+
+   o.create = function(post) {
+     return $http.post('/posts', post).success(function(data){
+       o.posts.push(data);
+     });
+   };
+
    return o;
 }]);
 
@@ -21,14 +29,9 @@ app.controller('MainCtrl', [
     $scope.addPost = function(){
       if(!$scope.title || $scope.title === '') { return; }
 
-      $scope.posts.push({
+      posts.create({
         title: $scope.title,
         link: $scope.link,
-        upvotes: 0,
-        comments: [
-          {author: 'Joe', body: 'Cool post!', upvotes: 0},
-          {author: 'Bob', body: 'Great idea but everything is wrong', upvotes: 0}
-        ]
       });
 
       $scope.title = '';
@@ -66,7 +69,12 @@ app.config([
         .state('home', {
           url: '/home',
           templateUrl: '/home.html',
-          controller: 'MainCtrl'
+          controller: 'MainCtrl',
+          resolve: {
+            postPromises: ['posts', function(posts){
+              return posts.getAll();
+            }]
+          }
         })
         .state('posts', {
           url: '/posts/{id}',
